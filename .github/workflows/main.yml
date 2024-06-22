@@ -41,10 +41,13 @@ jobs:
 
       - run: flutter pub get
       - name: Build APK
-        env:
-          BUILD_FLAVOR: "${{ github.event.inputs.flavor }}"
-          BUILD_TYPE: "${{ github.event.inputs.buildType }}"
-        run: flutter build apk --flavor "$BUILD_FLAVOR" --"$BUILD_TYPE"
+        run: |
+          echo "Building APK: type=$BUILD_TYPE flavor=${{ github.event.inputs.flavor }}"
+          if [ ${{ github.event.inputs.flavor }} ]; then
+            flutter build apk --flavor ${{ github.event.inputs.flavor }} --${{ github.event.inputs.buildType }}
+          else
+            flutter build apk --${{ github.event.inputs.buildType }}
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
