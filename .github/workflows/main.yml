@@ -5,6 +5,15 @@ on:
     branches:
       - 'release/*'
   workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Build type, either debug or release'
+        required: false
+        type: string
+      flavor:
+        description: 'Build flavor'
+        required: false
+        type: string
 
 jobs:
   build:
