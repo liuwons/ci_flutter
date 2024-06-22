@@ -30,9 +30,6 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -42,7 +39,7 @@ jobs:
       - run: flutter pub get
       - name: Build APK
         run: |
-          echo "Building APK: type=$BUILD_TYPE flavor=${{ github.event.inputs.flavor }}"
+          echo "Building APK: type=${{ github.event.inputs.buildType }} flavor=${{ github.event.inputs.flavor }}"
           if [ ${{ github.event.inputs.flavor }} ]; then
             flutter build apk --flavor ${{ github.event.inputs.flavor }} --${{ github.event.inputs.buildType }}
           else
