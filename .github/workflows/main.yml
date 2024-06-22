@@ -41,8 +41,10 @@ jobs:
         run: |
           echo "Building APK: type=${{ github.event.inputs.buildType }} flavor=${{ github.event.inputs.flavor }}"
           if [ ${{ github.event.inputs.flavor }} ]; then
+            echo "Building with flavor"
             flutter build apk --flavor ${{ github.event.inputs.flavor }} --${{ github.event.inputs.buildType }}
           else
+            echo "Building without flavor"
             flutter build apk --${{ github.event.inputs.buildType }}
           fi
 
