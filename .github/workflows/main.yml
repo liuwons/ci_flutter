@@ -40,11 +40,15 @@ jobs:
           flutter-version: 3.19.0
 
       - run: flutter pub get
-      - run: flutter build apk --release
+      - name: Build APK
+        env:
+          BUILD_FLAVOR: "${{ github.event.inputs.flavor }}"
+          BUILD_TYPE: "${{ github.event.inputs.buildType }}"
+        run: flutter build apk --flavor "$BUILD_FLAVOR" --"$BUILD_TYPE"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: ${{ github.workspace }}/build/app/outputs/flutter-apk/app-release.apk
+          path: ${{ github.workspace }}/build/app/outputs/flutter-apk/app-${{github.event.inputs.buildType}}.apk
 
